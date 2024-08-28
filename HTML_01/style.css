@@ -1,0 +1,81 @@
+body {
+    background-color: #000000; /* Cor de fundo para melhor contraste */
+    color: #f0f0f0; /* Texto claro para melhor legibilidade */
+    font-family: "Matemasie", sans-serif;
+    margin: 0;
+    padding: 20;
+    line-height: 1.6;
+}
+
+header {
+    background: linear-gradient(360deg, #000000, #4ca8ff); /* Gradiente vertical do preto para azul */
+    padding: 20px;
+    text-align: center;
+}
+
+.titulo {
+    font-size: 32px;
+    margin: 0;
+}
+
+main {
+    display: flex;
+    justify-content: flex-start;
+    max-width: 1000px;
+    height: 100px;
+    margin: 20px;
+    padding: 20px;
+    text-align: left;
+}
+
+.paragrafo {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.container img {
+    width: 1000px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adiciona uma sombra suave à imagem */ 
+    padding-left: 0.5%;
+    padding-top: 10%;
+}
+
+footer {
+    background: linear-gradient(180deg, #000000, #003366); /* Gradiente vertical do preto para azul escuro */
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+    margin-top: 800px;
+}
+
+.topic {
+    background-color: #4ca8ff;
+    padding: 20px;
+    margin: 15px;
+    width: 300px;
+    height: 300px;
+    float: left;
+
+  }
+
+
+  .topico1 {
+    border: 4px solid #4ca8ff ;
+    border-radius: 20px;
+    padding: 15px;
+    height: 300px;
+    width: 300px;
+    margin: 15px;
+
+  }
+
+  .topico1_h2 {
+    font-family: "Open Sans", sans-serif;
+    line-height: 1.6;
+  }
+
+  
+  
+  
