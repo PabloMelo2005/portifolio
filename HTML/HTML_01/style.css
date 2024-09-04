@@ -1,0 +1,58 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000000; /* Cor de fundo para melhor contraste */
+    color: #f0f0f0; /* Texto claro para melhor legibilidade */
+    
+}
+
+header {
+    background: linear-gradient(360deg, #000000, #4ca8ff); /* Gradiente vertical do preto para azul */
+    padding: 20px;
+    text-align: center;
+}
+
+.titulo {
+    font-family: "Sansita", sans-serif;
+    font-size: 50px;
+}
+
+
+.container img {
+    display: block;
+    width: auto;
+    height: auto; 
+    margin: auto;
+}
+
+footer {
+    background: linear-gradient(180deg, #000000, #003366); /* Gradiente vertical do preto para azul escuro */
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+    margin-top: 800px;
+}
+
+.topico1 {
+    font-family: "Open Sans", sans-serif;
+    display: block;
+    text-align: center;
+    margin-top: 5rem;
+    font-size: 20px;
+    margin-bottom: 10rem;
+    padding: 0rem 40rem;
+}
+
+
+
+
+  
+  
+  

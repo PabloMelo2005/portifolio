@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos</title>
+</head>
+
+<body>
+
+    <script>
+        document.write("SISTEMA DE INSERÇÃO DE PRODUTOS <br>");
+        var prod = prompt("Informe o produto:");
+        var qtde = parseInt(prompt("Informe a quantidade em estoque:"));
+
+        var status;
+        if (qtde === 0) {
+            status = "Zerado";
+        } else if (qtde > 10) {
+            status = "Controlada";
+        } else {
+            status = "Atenção";
+        }
+
+        document.write("Produto: " + prod + "<br>");
+        document.write("Quantidade em estoque: " + qtde + "<br>Status: " + status + "<br>");
+
+    </script>
+</body>
+
+</html>
