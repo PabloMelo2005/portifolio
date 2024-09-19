@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ConsumerViaCep")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6e816f710e1d6a1ceb9aad3c6d778f7f6753cb64")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+02226bc3a82a57d378dc23d2e03a103274f8a0c7")]
 [assembly: System.Reflection.AssemblyProductAttribute("ConsumerViaCep")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ConsumerViaCep")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
