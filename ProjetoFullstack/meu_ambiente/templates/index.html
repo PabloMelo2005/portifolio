@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+</head>
+<body>
+
+    <h1>CADASTRO DE PRODUTOS</h1>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div> {{ message }} </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <form action="/adicionar_produto" method="post">
+        <label for="nome">Nome: </label>
+        <input type="text" id="nome" required> <br><br>
+        <label for="preco">Preço: </label>
+        <input type="text" id="preco" required placeholder="R$ 0,00" oninput="this.value = this.value.replace(/[^0-9,]/g, '').replace(/(\..*)\./g, '$1');" > <br><br>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <button href="/products"> </button>
+    
+</body>
+</html>
