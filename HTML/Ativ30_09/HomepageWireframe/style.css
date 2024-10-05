@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    background-image: url(img/peakpx.jpg);
+    width: auto;
+    height: auto;
+
+}
+
+header {
+    display: flex;
+    background-color: black;
+    color: white;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    height: 5rem;
+    width: 100%;
+}
+
+header ul{
+    padding: 0.4rem;
+}
+
+.infos {
+    position: absolute;
+    background-color: white;
+    width: 850px;
+    height: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 2rem;
+    padding: 1rem;
+    padding-right: 1rem;
+}
+
+.infos p {
+    color: gray;
+}
+
+.infos img {
+    position: absolute;
+    margin: 1rem;
+    width: 650px;
+    height: 320px;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    border-radius: 0.5rem;
+    display: block;
+    margin: 0 auto;
+
+}
+
+.infos h1 {
+    position: absolute;
+    top:75%;
+    transform: translateY(-75%);
+}
+
+.resumo {
+    text-align: justify;
+    position: absolute;
+    top: 92%;
+    transform: translateY(-92%);
+    color: black;
+    padding: 0.3rem;
+}
