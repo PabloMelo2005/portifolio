@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\portifolio\\C#\\PizzaStoreApi\\PizzaStoreApi.csproj": {}
+    "F:\\portifolio\\C#\\PizzaHotApi\\PizzaHotApi.csproj": {}
   },
   "projects": {
-    "F:\\portifolio\\C#\\PizzaStoreApi\\PizzaStoreApi.csproj": {
+    "F:\\portifolio\\C#\\PizzaHotApi\\PizzaHotApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\portifolio\\C#\\PizzaStoreApi\\PizzaStoreApi.csproj",
-        "projectName": "PizzaStoreApi",
-        "projectPath": "F:\\portifolio\\C#\\PizzaStoreApi\\PizzaStoreApi.csproj",
+        "projectUniqueName": "F:\\portifolio\\C#\\PizzaHotApi\\PizzaHotApi.csproj",
+        "projectName": "PizzaHotApi",
+        "projectPath": "F:\\portifolio\\C#\\PizzaHotApi\\PizzaHotApi.csproj",
         "packagesPath": "C:\\Users\\Pablo Melo\\.nuget\\packages\\",
-        "outputPath": "F:\\portifolio\\C#\\PizzaStoreApi\\obj\\",
+        "outputPath": "F:\\portifolio\\C#\\PizzaHotApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Pablo Melo\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -46,10 +46,6 @@
             "Microsoft.EntityFrameworkCore.InMemory": {
               "target": "Package",
               "version": "[8.0.10, )"
-            },
-            "Swashbuckle.AspNetCore": {
-              "target": "Package",
-              "version": "[6.8.0, )"
             }
           },
           "imports": [
