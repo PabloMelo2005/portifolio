@@ -10,21 +10,18 @@ namespace AnimaisExtincaoAPI.Controllers
     public class AnimaisController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly HttpClient _httpClient;
+        private readonly string _apiKey; // Armazenar a chave de API
 
-        public AnimaisController(AppDbContext context)
+        public AnimaisController(AppDbContext context, HttpClient httpClient)
         {
             _context = context;
-        }
-
-        // GET: api/animais
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Animal>>> GetAnimais()
-        {
-            return await _context.Animais.ToListAsync();
+            _httpClient = httpClient;
+            _httpClient.DefaultRequestHeaders.Add("User-Agent", "IntegracaoViacep");
         }
 
         // GET: api/animais/{id}
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<Animal>> GetAnimal(int id)
         {
             var animal = await _context.Animais.FindAsync(id);
@@ -53,7 +50,7 @@ namespace AnimaisExtincaoAPI.Controllers
         {
             if (id != animal.Id)
             {
-                return BadRequest();
+                return BadRequest("ID do animal não corresponde ao ID fornecido na URL.");
             }
 
             _context.Entry(animal).State = EntityState.Modified;
@@ -66,7 +63,7 @@ namespace AnimaisExtincaoAPI.Controllers
             {
                 if (!_context.Animais.Any(e => e.Id == id))
                 {
-                    return NotFound();
+                    return NotFound("Animal não encontrado.");
                 }
                 else
                 {
@@ -84,7 +81,7 @@ namespace AnimaisExtincaoAPI.Controllers
             var animal = await _context.Animais.FindAsync(id);
             if (animal == null)
             {
-                return NotFound();
+                return NotFound("Animal não encontrado.");
             }
 
             _context.Animais.Remove(animal);
