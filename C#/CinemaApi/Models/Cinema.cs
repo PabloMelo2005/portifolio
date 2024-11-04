@@ -1,11 +1,18 @@
-namespace CinemaApi.Models {
+using System.Text.Json.Serialization;
 
-    public class Cinema {
+namespace CinemaApi.Models
+{
+
+    public class Cinema
+    {
 
         public int cinemaId { get; set; }
 
         public string? nome { get; set; }
 
         public string? cnpj { get; set; }
+
+        [JsonIgnore]
+        public Filme Filme { get; set; } = null!;
     }
 }

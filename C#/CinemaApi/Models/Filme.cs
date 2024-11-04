@@ -1,6 +1,8 @@
-namespace CinemaApi.Models {
+namespace CinemaApi.Models
+{
 
-    public class Filme {
+    public class Filme
+    {
 
         public int filmeId { get; set; }
 
@@ -11,5 +13,6 @@ namespace CinemaApi.Models {
         public int ano { get; set; }
 
         public int cinemaId { get; set; }
+        public ICollection<Cinema> Cinemas { get; } = new List<Cinema>();
     }
 }
