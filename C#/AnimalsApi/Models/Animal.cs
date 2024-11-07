@@ -1,6 +1,7 @@
 
 namespace AnimaisExtincaoAPI.Models
 {
+    //Classe utilizada na minha API para inserção dos dados manualmente:
     public class Animal
     {
         public int Id { get; set; }
