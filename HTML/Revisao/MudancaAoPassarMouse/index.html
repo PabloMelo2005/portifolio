@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mudança de Cor ao Passar o Mouse</title>
+    <style>
+        .caixa {
+            width: 200px;
+            height: 200px;
+            background-color: #4CAF50;
+            margin: 50px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="caixa" id="caixa">
+        Selecione!
+    </div>
+
+    <script>
+        const caixa = document.getElementById('caixa');
+
+        // Evento para mudar a cor ao passar o mouse
+        caixa.addEventListener('mouseover', function () {
+            caixa.style.backgroundColor = '#FF5722'; 
+        });
+
+        // Evento para restaurar a cor ao retirar o mouse
+        caixa.addEventListener('mouseout', function () {
+            caixa.style.backgroundColor = '#4CAF50'; 
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SomaValores</title>
+</head>
+
+<body>
+    <input type="number" id="numero1" placeholder="Digite um número">
+    <input type="number" id="numero2" placeholder="Digite outro número">
+    <button id="botaoSomar">Somar</button>
+    <p id="resultadoSoma">Resultado: </p>
+    <script>
+        document.getElementById("botaoSomar").addEventListener("click"
+            , function () {
+                var num1 = parseFloat(document.getElementById("numero1").value);
+                var num2 = parseFloat(document.getElementById("numero2").value);
+                var soma = num1 + num2;
+                document.getElementById("resultadoSoma").innerText = "Resultado: " + soma;
+            });
+    </script>
+</body>
+
+</html>

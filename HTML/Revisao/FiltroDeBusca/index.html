@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtro de Busca em Tabela</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        input[type="text"] {
+            margin-bottom: 10px;
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Filtro de pesquisa em tabela</h2>
+    <input type="text" id="busca" placeholder="Digite um nome para buscar...">
+
+    <!-- Tabela com Dados -->
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Idade</th>
+                <th>Cidade</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-dados">
+            <tr>
+                <td>Ana</td>
+                <td>23</td>
+                <td>São Paulo</td>
+            </tr>
+            <tr>
+                <td>Bruno</td>
+                <td>34</td>
+                <td>Rio de Janeiro</td>
+            </tr>
+            <tr>
+                <td>Carlos</td>
+                <td>29</td>
+                <td>Belo Horizonte</td>
+            </tr>
+            <tr>
+                <td>Daniela</td>
+                <td>25</td>
+                <td>Curitiba</td>
+            </tr>
+            <tr>
+                <td>Eduardo</td>
+                <td>40</td>
+                <td>Salvador</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('busca').addEventListener('input', function () {
+            let filtro = this.value.toLowerCase();
+            let linhas = document.querySelectorAll('#tabela-dados tr');
+
+            // Percorre cada linha da tabela
+            linhas.forEach(function (linha) {
+                let textoLinha = linha.innerText.toLowerCase();
+                if (textoLinha.includes(filtro)) {
+                    linha.style.display = ''; // Mostra a linha
+                } else {
+                    linha.style.display = 'none'; // Oculta a linha
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

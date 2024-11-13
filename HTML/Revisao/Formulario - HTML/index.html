@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil do Aluno</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Perfil do Aluno</h1>
+  <table>
+    <tr>
+      <td colspan="2">
+        <!-- Opções de foto de perfil -->
+        <div class="foto-perfil">
+          <img id="foto" src="perfil1.jpg" alt="Foto de Perfil">
+          <div class="controles">
+            <button onclick="mudarFoto('perfil1.jpg')">1</button>
+            <button onclick="mudarFoto('perfil2.jpg')">2</button>
+            <button onclick="mudarFoto('perfil3.jpg')">3</button>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Nome Completo:</strong></td>
+      <td>João da Silva</td>
+    </tr>
+    <tr>
+      <td><strong>RA:</strong></td>
+      <td>123456789</td>
+    </tr>
+    <tr>
+      <td><strong>Curso e Período Atual:</strong></td>
+      <td>Engenharia da Computação, 5º período</td>
+    </tr>
+    <tr>
+      <td><strong>Endereço Completo:</strong></td>
+      <td>Rua das Flores, 123, São Paulo, SP</td>
+    </tr>
+    <tr>
+      <td><strong>E-mail:</strong></td>
+      <td>joao.silva@email.com</td>
+    </tr>
+    <tr>
+      <td><strong>UCs já cursadas:</strong></td>
+      <td>Programação, Algoritmos, Cálculo I, Cálculo II, Física I, Física II</td>
+    </tr>
+    <tr>
+      <td><strong>Descrição Pessoal:</strong></td>
+      <td>Gosto de jogar futebol, viajar, e tenho interesse em programação e tecnologia.</td>
+    </tr>
+    <tr>
+      <td><strong>Descrição Profissional/Acadêmica:</strong></td>
+      <td>Estudante dedicado e com interesse em desenvolvimento de software e inteligência artificial.</td>
+    </tr>
+    <tr>
+      <td><strong>LinkedIn:</strong></td>
+      <td><a href="https://www.linkedin.com/in/joaosilva" target="_blank">João Silva</a></td>
+    </tr>
+  </table>
+
+  <!-- Script para alternar as fotos de perfil -->
+  <script>
+    function mudarFoto(foto) {
+      document.getElementById("foto").src = foto;
+    }
+  </script>
+</body>
+</html>
