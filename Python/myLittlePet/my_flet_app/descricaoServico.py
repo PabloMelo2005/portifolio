@@ -16,7 +16,6 @@ def main(page: ft.Page):
         padding=0,
         content=ft.Stack(
             [
-                
                 ft.Container(
                     width=287,
                     height=460,
