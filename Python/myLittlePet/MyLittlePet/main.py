@@ -6,11 +6,18 @@ BG_WIDTH = 287
 BG_HEIGHT = 585
 
 
+class Message:
+    def __init__(self, user: str, text: str, message_type: str):
+        self.user = user
+        self.text = text
+        self.message_type = message_type
+
+
 def main(page: ft.Page):
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.title = "MyLittlePet"
-    page.bgcolor=BG_COLOR
+    page.bgcolor = BG_COLOR
     page.window_width = BG_WIDTH
     page.window_height = BG_HEIGHT
     page.padding = 0
@@ -30,8 +37,8 @@ def main(page: ft.Page):
     def create_button(text):
         avatar = create_avatar()
         return ft.ElevatedButton(
-            width=257,
-            height=74,
+            width=250,
+            height=64,
             style=ft.ButtonStyle(
                 shape=ft.RoundedRectangleBorder(radius=15),
                 bgcolor="#779030",
@@ -41,24 +48,197 @@ def main(page: ft.Page):
                     color="#FFFFFF"
                 ),
             ),
-            on_click=lambda e: print(f"Selecionado: {text}"),
+            on_click=lambda e: page.go("/descricao_servico"),
             content=ft.Row(
-                [
+                controls=[
                     avatar,
                     ft.Text(
                         text,
                         size=15,
                         weight=ft.FontWeight.W_700,
                         color="#FFFFFF",
-                        text_align=ft.TextAlign.START,
+                        text_align=ft.TextAlign.CENTER,
                         max_lines=1,
                         overflow=ft.TextOverflow.ELLIPSIS,
                     ),
                 ],
-                alignment=ft.MainAxisAlignment.START,
+                alignment=ft.MainAxisAlignment.CENTER,
                 spacing=10,
             ),
+        ),
+
+    chat = ft.ListView(
+        expand=True,
+        spacing=10,
+        auto_scroll=True,
+    )
+
+    new_message = ft.TextField(
+        hint_text="Digite sua mensagem...",
+        autofocus=True,
+        shift_enter=True,
+        min_lines=1,
+        max_lines=5,
+        filled=True,
+        expand=True,
+    )
+
+    def on_message(message):
+        is_user_message = message.user == page.session.get("user_name")
+
+        chat.controls.append(
+            ft.Row(
+                controls=[
+                    ft.Container(
+                        content=ft.Column(
+                            [
+                                ft.Text(
+                                    f"{message.user}:",
+                                    size=12,
+                                    weight="bold",
+                                    color="white" if is_user_message else "black",
+                                ),
+                                ft.Text(
+                                    message.text,
+                                    size=14,
+                                    color="white" if is_user_message else "black",
+                                ),
+                            ],
+                            spacing=5,
+                        ),
+                        padding=10,
+                        border_radius=8,
+                        bgcolor="#0078D7" if is_user_message else "#E1E1E1",
+                        margin=ft.margin.symmetric(vertical=5),
+                        alignment=ft.alignment.center_left
+                        if not is_user_message
+                        else ft.alignment.center_right,
+                    )
+                ],
+                alignment=ft.MainAxisAlignment.END if is_user_message else ft.MainAxisAlignment.START,
+            )
         )
+        chat.update()
+
+    def send_click(e):
+        if new_message.value.strip():
+            page.pubsub.send_all(
+                Message(
+                    user=page.session.get("user_name"),
+                    text=new_message.value,
+                    message_type="chat_message",
+                )
+            )
+            new_message.value = ""
+            new_message.update()
+
+    def join_click(e):
+        if not user_name.value.strip():
+            user_name.error_text = "Nome não pode estar vazio!"
+            user_name.update()
+        else:
+            page.session.set("user_name", user_name.value)
+            page.dialog.open = False
+            page.pubsub.send_all(
+                Message(
+                    user=user_name.value,
+                    text=f"{user_name.value} entrou no chat.",
+                    message_type="login_message",
+                )
+            )
+        page.update()
+
+    user_name = ft.TextField(label="Digite seu nome")
+
+    page.dialog = ft.AlertDialog(
+        open=True,
+        modal=True,
+        title=ft.Text("Bem-vindo!"),
+        content=ft.Column([user_name], tight=True),
+        actions=[
+            ft.ElevatedButton(
+                text="Entrar no chat", on_click=join_click
+            )
+        ],
+        actions_alignment="end",
+    )
+
+    page.pubsub.subscribe(on_message)
+
+    chat_layout = ft.Stack(
+        controls=[
+            ft.Container(
+                width=287,
+                height=400,
+                bgcolor="#7D5D42",
+                margin=ft.margin.only(top=70),
+                border_radius=5,
+            ),
+            ft.Column(
+                [
+                    ft.Container(
+                        content=chat,
+                        bgcolor="#FFFFFF",
+                        width=250,
+                        height=320,
+                        border_radius=10,
+                        padding=10,
+                        margin=ft.margin.only(left=10, right=10, top=55),
+                        border=ft.border.all(1, ft.colors.BLACK),
+                    ),
+                    ft.Row(
+                        controls=[
+                            new_message,
+                            ft.ElevatedButton(
+                                "Enviar",
+                                on_click=send_click,
+                                bgcolor="#C2690A",
+                                color=ft.colors.WHITE,
+                            ),
+                        ],
+                        alignment=ft.MainAxisAlignment.CENTER,
+                    ),
+                ],
+                alignment=ft.MainAxisAlignment.CENTER,
+            ),
+            ft.Container(
+                content=ft.Text(
+                    "Chat", color="white", size=18, weight="bold"
+                ),
+                bgcolor="#8B4513",
+                width=200,
+                height=40,
+                border_radius=20,
+                alignment=ft.alignment.center,
+                margin=ft.margin.only(bottom=420, top=20),
+                border=ft.border.all(1, ft.colors.BLACK),
+            ),
+        ],
+        alignment=ft.alignment.center,
+        height=470,
+    )
+
+    navigation_bar = ft.Container(
+        content=ft.NavigationBar(
+            destinations=[
+                ft.NavigationBarDestination(
+                    icon=ft.icons.HOME_ROUNDED, label="Tela Inicial"
+                ),
+                ft.NavigationBarDestination(
+                    icon=ft.icons.PERSON_ROUNDED, label="Perfil"
+                ),
+            ],
+            bgcolor="#BF5F0B",
+            indicator_color="#DE8A18",
+        ),
+        height=80,
+        width=page.window_width,
+        alignment=ft.alignment.center,
+        padding=0,
+        margin=0,
+        bgcolor="#BF5F0B",
+        bottom=0,
+    )
 
     button1 = create_button("Lucas Silva da Costa")
     button2 = create_button("Ana Clara Macedo")
@@ -400,7 +580,7 @@ def main(page: ft.Page):
                                                 color="#FFFFFF",
                                             ),
                                         ),
-                                        on_click=lambda e: page.go(
+                                        on_click=lambda e: print("Button clicked") or page.go(
                                             "/servicos_agendados"),
                                     ),
                                 ),
@@ -448,26 +628,7 @@ def main(page: ft.Page):
                                         on_click=None,
                                     ),
                                 ),
-                                ft.Container(
-                                    bottom=0,
-                                    content=ft.NavigationBar(
-                                        destinations=[
-                                            ft.NavigationBarDestination(
-                                                icon=ft.icons.HOME_ROUNDED, label="Tela Inicial"
-                                            ),
-                                            ft.NavigationBarDestination(
-                                                icon=ft.icons.PERSON_ROUNDED, label="Perfil"
-                                            ),
-                                        ],
-                                        bgcolor="#BF5F0B",
-                                        indicator_color="#DE8A18",
-                                    ),
-                                    width=BG_WIDTH,
-                                    height=80,
-                                    margin=ft.margin.only(bottom=0, top=0),
-                                    bgcolor="#BF5F0B",
-                                    alignment=ft.alignment.center,
-                                ),
+                                navigation_bar,
                             ],
                             width=BG_WIDTH,
                             height=BG_HEIGHT,
@@ -509,35 +670,17 @@ def main(page: ft.Page):
                                                     padding=ft.padding.all(10)),
                                             ],
                                             alignment=ft.MainAxisAlignment.CENTER,
-                                            spacing=10,
+                                            spacing=5,
                                             expand=True,
                                         ),
                                     ],
                                     alignment=ft.MainAxisAlignment.CENTER,
                                     expand=True,
                                     top=20,
+                                    left=2,
+                                    right=2,
                                     width=BG_WIDTH,
                                     height=460,
-                                ),
-                                ft.Container(
-                                    bottom=0,
-                                    content=ft.NavigationBar(
-                                        destinations=[
-                                            ft.NavigationBarDestination(
-                                                icon=ft.icons.HOME_ROUNDED, label="Tela Inicial"
-                                            ),
-                                            ft.NavigationBarDestination(
-                                                icon=ft.icons.PERSON_ROUNDED, label="Perfil"
-                                            ),
-                                        ],
-                                        bgcolor="#BF5F0B",
-                                        indicator_color="#DE8A18",
-                                    ),
-                                    width=BG_WIDTH,
-                                    height=80,
-                                    margin=ft.margin.only(bottom=0, top=0),
-                                    bgcolor="#BF5F0B",
-                                    alignment=ft.alignment.center,
                                 ),
                                 ft.Row(
                                     controls=[
@@ -565,18 +708,192 @@ def main(page: ft.Page):
                                     ],
                                     alignment=ft.MainAxisAlignment.START,
                                     vertical_alignment=ft.CrossAxisAlignment.CENTER,
-                                    bottom=480
+                                    bottom=480, spacing=2,
                                 ),
+                                navigation_bar,
                             ],
                             width=BG_WIDTH,
                             height=BG_HEIGHT,
                             expand=True,
-                            alignment=ft.alignment.center,
                         )
                     ]
                 )
+            ),
+
+        elif route == "/descricao_servico":
+            page.views.append(
+                ft.View(
+                    "/descricao_servico",
+                    controls=[
+                        ft.Column(
+                            expand=True,  # Faz o Column ocupar todo o espaço disponível
+                            controls=[
+                                ft.Container(
+                                    expand=True,  # Faz o Container ocupar todo o espaço
+                                    margin=0,
+                                    padding=0,
+                                    content=ft.Stack(
+                                        controls=[
+                                            # Fundo principal
+                                            ft.Container(
+                                                bgcolor=BG_COLOR,
+                                                expand=True,  # Garante que o fundo ocupa toda a tela
+                                            ),
+                                            # Container marrom (central)
+                                            ft.Container(
+                                                width=264,
+                                                height=460,
+                                                bgcolor="#7D5D42",
+                                                border_radius=15,
+                                                alignment=ft.alignment.center,
+                                            ),
+                                            # Container verde (conteúdo interno)
+                                            ft.Container(
+                                                width=240,
+                                                height=270,
+                                                bgcolor="#7D8E4E",
+                                                border_radius=15,
+                                                margin=ft.margin.only(
+                                                    bottom=30),
+                                                padding=0,
+                                                alignment=ft.alignment.center,
+                                                content=ft.Column(
+                                                    controls=[
+                                                        ft.Row(
+                                                            controls=[
+                                                                ft.Icon(
+                                                                    name=ft.icons.PEOPLE,
+                                                                    color="black",
+                                                                    size=24,
+                                                                ),
+                                                                ft.Text(
+                                                                    "Lucas da Silva Costa",
+                                                                    color="white",
+                                                                    size=18,
+                                                                    weight="bold",
+                                                                ),
+                                                            ],
+                                                            alignment=ft.MainAxisAlignment.CENTER,
+                                                            spacing=10,
+                                                        ),
+                                                        ft.Row(
+                                                            controls=[
+                                                                ft.Icon(
+                                                                    name=ft.icons.CALENDAR_MONTH_OUTLINED,
+                                                                    color="black",
+                                                                    size=24,
+                                                                ),
+                                                                ft.Text(
+                                                                    "10/04/2024",
+                                                                    color="white",
+                                                                    size=18,
+                                                                    weight="bold",
+                                                                ),
+                                                            ],
+                                                            alignment=ft.MainAxisAlignment.CENTER,
+                                                            spacing=10,
+                                                        ),
+                                                        ft.Row(
+                                                            controls=[
+                                                                ft.Icon(
+                                                                    name=ft.icons.PETS,
+                                                                    color="black",
+                                                                    size=24,
+                                                                ),
+                                                                ft.Text(
+                                                                    "Gato",
+                                                                    color="white",
+                                                                    size=18,
+                                                                    weight="bold",
+                                                                ),
+                                                            ],
+                                                            alignment=ft.MainAxisAlignment.CENTER,
+                                                            spacing=10,
+                                                        ),
+                                                        ft.Row(
+                                                            controls=[
+                                                                ft.Icon(
+                                                                    name=ft.icons.LOCK_CLOCK,
+                                                                    color="black",
+                                                                    size=24,
+                                                                ),
+                                                                ft.Text(
+                                                                    "14h",
+                                                                    color="white",
+                                                                    size=18,
+                                                                    weight="bold",
+                                                                ),
+                                                            ],
+                                                            alignment=ft.MainAxisAlignment.CENTER,
+                                                            spacing=10,
+                                                        ),
+                                                        ft.Container(
+                                                            alignment=ft.alignment.center,
+                                                            margin=ft.margin.only(
+                                                                top=20),
+                                                            content=ft.ElevatedButton(
+                                                                content=ft.Container(
+                                                                    content=ft.Icon(
+                                                                        name=ft.icons.MESSAGE,
+                                                                        color=ft.colors.WHITE,
+                                                                    ),
+                                                                    width=40,
+                                                                    height=40,
+                                                                ),
+                                                                bgcolor="#8C5120",
+                                                            ),
+                                                        ),
+                                                    ],
+                                                    alignment=ft.MainAxisAlignment.CENTER,
+                                                    spacing=15,
+                                                ),
+                                            ),
+                                            # Título "Informações"
+                                            ft.Container(
+                                                content=ft.Text(
+                                                    "Informações",
+                                                    color="white",
+                                                    size=18,
+                                                    weight="bold",
+                                                ),
+                                                bgcolor="#8B4513",
+                                                width=200,
+                                                height=40,
+                                                border_radius=20,
+                                                alignment=ft.alignment.center,
+                                                margin=ft.margin.only(top=20),
+                                                border=ft.border.all(
+                                                    1, ft.colors.BLACK),
+                                            ),
+                                        ],
+                                        alignment=ft.alignment.center,
+                                    ),
+                                ),
+                            ],
+                            spacing=0,
+                            alignment=ft.MainAxisAlignment.CENTER,
+                        ),
+                        navigation_bar,
+                    ],
+                )
             )
 
+        elif route == "/chat":
+            page.views.append(
+                ft.View(
+                    "/chat",
+                    controls=[
+                        ft.Column(
+                            [
+                                chat_layout,
+                                navigation_bar,
+                            ],
+                            alignment=ft.MainAxisAlignment.START,
+                            spacing=0,
+                        )
+                    ],
+                )
+            )
         page.update()
 
     page.on_route_change = lambda e: route_change(page, page.route)
